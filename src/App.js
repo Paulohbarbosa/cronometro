@@ -10,17 +10,17 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      milissegundos:0,
-      segundos: 0,
-      minutos: 0,
+      milissegundos:60,
+      segundos: 60,
+      minutos: 60,
       stop: false,
       nameStop: "Start",
-      name: "Cronômetro", 
+      name: "Temporizador", 
       parcial: ""
     };
   }
   zerarCronometro() {
-     this.state.milissegundos = -1
+     this.state.milissegundos = 0
       this.state.segundos = 0
       this.state.minutos = 0
       this.state.parcial = ""
@@ -45,22 +45,25 @@ class App extends React.Component {
     if (this.state.stop === true){
       this.setState(
          function (state, props) {
-          if (state.milissegundos >= 99) {
+          if (state.milissegundos <= 0) {
             this.incrementarSegundo(state)
             this.zera();            
           }
-          if (state.segundos >= 60) {
-            this.zerar()
-            this.incrementarMinuto(state)                 
-            }  
-          return({ milissegundos: state.milissegundos +1, /*segundos: state.segundos*/})
+          if (state.segundos <= 0) {
+            this.incrementarMinuto(state)
+              this.zerar()            
+          }  
+          if (state.minutos <= 0) {
+            this.zerado()
+          }
+          return({ milissegundos: state.milissegundos -1, /*segundos: state.segundos*/})
          })
     }
   }
 
  incrementarSegundo (state) {
     this.setState(() => { 
-      return {segundos: state.segundos +1}
+      return {segundos: state.segundos -1}
     })
   };
   zera () {
@@ -72,7 +75,7 @@ class App extends React.Component {
   
   incrementarMinuto (state) {
     this.setState(() => { 
-      return {minutos: state.minutos +1}
+      return {minutos: state.minutos -1}
     })
   };
   
@@ -82,9 +85,15 @@ class App extends React.Component {
     })
   }
 
+  zerado () {
+    this.setState({ 
+      minutos: 0 
+    })
+  }
+
   componentDidMount(){
     this.timer = setInterval(
-      () => this.incrementar(), 10)
+      () => this.incrementar(), 100)
   }
   
 
