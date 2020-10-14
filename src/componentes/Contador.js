@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 
 const Contador = (props) => (
     <h1 class="my-title">{props.minutos}:{props.segundos}</h1>
