@@ -23,11 +23,6 @@ class Temporizador extends React.Component {
       this.state.parcial = ""
    }
   
-  parcial(){
-    let p = this.state.minutos+ ":"+ this.state.segundos+ ":"+ this.state.milissegundos + "\n\n"
-    this.state.parcial = this.state.parcial + p
-  }
-  
   pararTempo(){
     this.setState({ 
         stop: !this.state.stop 
@@ -100,13 +95,11 @@ class Temporizador extends React.Component {
   render(){
 
     return (
-      <div>
-        
+      <div>       
         <LabelRelogio name={this.state.name} />
         <Contador minutos={this.state.minutos} segundos={this.state.segundos} milissegundos={this.state.milissegundos} />        
         <Botao onClick={() => this.zerarCronometro()} label={"Zerar"} />
         <Botao onClick={() => this.pararTempo()} label={this.state.nameStop} />
-        <Botao onClick={() => this.parcial()} label={"Pacial"} />
         <LabelRelogio name={this.state.parcial} />
       </div>
     );
