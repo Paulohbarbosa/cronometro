@@ -2,7 +2,8 @@ import React from 'react';
 import { Tabs, Tab, Container, Row, Col } from 'react-bootstrap';
 import Temporizador from '../temporizador/Temporizador';
 import Relogio from '../relogio/Relogio';
-import Cronometro from '../cronometro/Cronometro'
+import Cronometro from '../cronometro/Cronometro';
+import '../App.css';
 //import Clock  from 'react-bootstrap-icons';
 
 const Interface = (props) => (

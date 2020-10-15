@@ -23,10 +23,10 @@ class Temporizador extends React.Component {
       this.state.parcial = ""
    }
   
-  parcial(){
-    let p = this.state.minutos+ ":"+ this.state.segundos+ ":"+ this.state.milissegundos + "\n\n"
-    this.state.parcial = this.state.parcial + p
-  }
+  // parcial(){
+  //   let p = this.state.minutos+ ":"+ this.state.segundos+ ":"+ this.state.milissegundos + "\n\n"
+  //   this.state.parcial = this.state.parcial + p
+  // }
   
   pararTempo(){
     this.setState({ 

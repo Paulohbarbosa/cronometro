@@ -60,6 +60,7 @@ class App extends React.Component {
         return {segundos: state.segundos +1}
       })
     };
+    
     zera () {
       this.setState({ 
         milissegundos: 0 
