@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       milissegundos:60,
       segundos: 60,
-      minutos: 60,
+      minutos: 2,
       stop: false,
       nameStop: "Start",
       name: "Temporizador", 
@@ -46,12 +46,13 @@ class App extends React.Component {
       this.setState(
          function (state, props) {
           if (state.milissegundos <= 0) {
-            this.incrementarSegundo(state)
-            this.zera();            
+            state.milissegundos = 60;
+            this.incrementarSegundo(state)                       
           }
           if (state.segundos <= 0) {
             this.incrementarMinuto(state)
-              this.zerar()            
+            state.segundos = 60;
+                       
           }  
           if (state.minutos <= 0) {
             this.zerado()
@@ -93,7 +94,7 @@ class App extends React.Component {
 
   componentDidMount(){
     this.timer = setInterval(
-      () => this.incrementar(), 100)
+      () => this.incrementar(), 1)
   }
   
 
