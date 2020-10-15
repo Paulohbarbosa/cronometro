@@ -2,7 +2,6 @@ import React from 'react';
 import Contador from '../componentes/Contador';
 import Botao from '../componentes/Botao';
 import LabelRelogio from '../componentes/LabelRelogio';
-import '../App.css' 
 
 class Temporizador extends React.Component {
   constructor(props){
