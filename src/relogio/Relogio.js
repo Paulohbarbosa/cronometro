@@ -1,30 +1,34 @@
 import React from 'react';
 import LabelRelogio from '../componentes/LabelRelogio';
+import { Row, Col } from 'react-bootstrap';
 
 class Relogio extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {date: new Date()};
-      }
-      componentDidMount() {
+        this.state = { date: new Date() };
+    }
+    componentDidMount() {
         this.timerID = setInterval(
-          () => this.tick(),
-          1000
+            () => this.tick(),
+            1000
         );
-      }
-      componentWillUnmount() {
+    }
+    componentWillUnmount() {
         clearInterval(this.timerID);
-      }
-      tick() {
+    }
+    tick() {
         this.setState({
-          date: new Date()
+            date: new Date()
         });
-      }
+    }
     render() {
         return (
-            <div>
-                <LabelRelogio name={this.state.date.toLocaleTimeString()} />
-            </div>
+            <Row className="justify-content-md-center">
+                <Col>
+                    <h1>Relógio</h1>
+                    <h1>{this.state.date.toLocaleTimeString()}</h1>
+                </Col>
+            </Row>
         );
     }
 }
