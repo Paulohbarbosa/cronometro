@@ -2,6 +2,7 @@ import React from 'react';
 import Contador from '../componentes/Contador';
 import Botao from '../componentes/Botao';
 import LabelRelogio from '../componentes/LabelRelogio';
+import test from './test';
 
 class Temporizador extends React.Component {
   constructor(props){
@@ -101,6 +102,7 @@ class Temporizador extends React.Component {
         <Botao onClick={() => this.zerarCronometro()} label={"Zerar"} />
         <Botao onClick={() => this.pararTempo()} label={this.state.nameStop} />
         <LabelRelogio name={this.state.parcial} />
+        <test/>
       </div>
     );
   }
