@@ -1,15 +1,16 @@
 import React from 'react';
 import Botao from '../componentes/Botao'
 import LabelRelogio from '../componentes/LabelRelogio'
+import { Button } from 'react-bootstrap';
 
-class Cronometro extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       horas: 0,
       segundos: 0,
       minutos: 0,
-      centesimo: 100,
+      milissegundo: 100,
       stop: false,
       nameStop: "Iniciar",
       name: "Temporizador",
@@ -20,7 +21,7 @@ class Cronometro extends React.Component {
   }
 
   parcial() {
-    let p = this.state.horas + ":" + this.state.minutos + ":" + this.state.segundos + ':' + this.state.centesimo + "\n\n"
+    let p = this.state.horas + ":" + this.state.minutos + ":" + this.state.segundos + ':' + this.state.milissegundo + "\n\n"
     this.state.parcial = this.state.parcial + p
   }
 
@@ -50,12 +51,12 @@ class Cronometro extends React.Component {
             } else if (state.segundos <= 0) {
               this.decrementarMinuto(state)
               this.state.segundos = 59
-            } else if (state.centesimo <= 0) {
-              this.state.centesimo = 100
+            } else if (state.milissegundo <= 0) {
+              this.state.milissegundo = 100
               this.decrementarSegundo(state)
             }
           }
-          return ({ centesimo: state.centesimo - 1 })
+          return ({ milissegundo: state.milissegundo - 1 })
         })
     }
   }
@@ -82,7 +83,7 @@ class Cronometro extends React.Component {
     this.setState({
       segundos: 0,
       minutos: 0,
-      centesimo: 0,
+      milissegundo: 0,
       horas: 0
     })
   }
@@ -92,17 +93,27 @@ class Cronometro extends React.Component {
       () => this.decrementar(), 10)
   }
 
-   setTempo() {
-    let horas = this.refs.horas.value || 0;
-    let minutos = this.refs.minutos.value || 0;
-    let segundos = this.refs.segundos.value || 0;
-    console.log(horas, minutos, segundos);
-    this.setState({
-      horas,
-      minutos,
-      segundos
-    })
+  setTempo(){
+    if(this.refs.horas.value < 0 || this.refs.minutos.value < 0 || this.refs.segundos.value < 0){
+      this.state.horas = 0
+      this.state.minutos = 0
+      this.state.segundos = 0
+    }else if(this.refs.minutos.value > 59 || this.refs.segundos.value > 59){
+      this.state.horas = this.refs.horas.value || 0
+      this.state.minutos = this.refs.horas.value || 59
+      this.state.segundos = this.refs.horas.value || 59
+    }else{
+         let horas = this.refs.horas.value || 0;
+         let minutos = this.refs.minutos.value || 0;
+         let segundos = this.refs.segundos.value || 0;
+         console.log(horas, minutos, segundos);
+         this.setState({
+           horas,
+           minutos,
+           segundos
+         })
   }
+}
 
   handleSubmit(event) {
     event.preventDefault();
@@ -110,23 +121,24 @@ class Cronometro extends React.Component {
 
   render() {
     return (
+       
       <div>
-        <div className="relogio">
+        <LabelRelogio name={this.state.name} />
+         <div className="relogio">
           <form ref="form" onSubmit={this.handleSubmit} className="countdown-form">
             <input type="number" min="0" max="8.760" ref="horas" />
             <input type="number" min="0" max="59" ref="minutos" />
             <input type="number" min="0" max="59" ref="segundos" />
-            <Botao onClick={() => this.setTempo()} label="Iniciar" />
+            <Button className="mr-3 ml-1 col-3" variant="primary" onClick={() => this.setTempo()}> Adicionar</Button>
           </form>
           <h1 class="my-title" > {this.state.horas}:{this.state.minutos}:{this.state.segundos}</h1>
-          <LabelRelogio name={this.state.name} />
-          <Botao onClick={() => this.zerar()} label={"Zerar"} />
-          <Botao onClick={() => this.pararTempo()} label={this.state.nameStop} />
-          <Botao onClick={() => this.parcial()} label={"Pacial"} />
-          <LabelRelogio name={this.state.parcial} />
-        </div>
-      </div>
-    );
+                       
+        <Button className="mr-3 col-3" variant="primary"onClick={() => this.zerar()}>Zerar</Button>
+        <Button className="mr-3 col-3" variant="primary" onClick={() => this.pararTempo()}>{this.state.nameStop}</Button>
+        <Button className="mr-3 col-3" variant="primary"onClick={() => this.parcial()}>Parcial</Button>                
+         </div>   
+        </div>    
+      );
   }
 }
-export default Cronometro;
+export default App;
