@@ -21,9 +21,6 @@ const Interface = (props) => (
                     <Tab eventKey="Cronometro" title={<Stopwatch color="royalblue" size={50} />}>
                         <Cronometro />
                     </Tab>
-                    <Tab eventKey="test" title="Test">
-                        <Saudacao tipo="bom dia" nome="João" />
-                    </Tab>
                 </Tabs>
             </Col>
         </Row>

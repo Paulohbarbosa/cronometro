@@ -40,7 +40,8 @@ class App extends React.Component {
       this.setState(
         function (state, props) {
 
-          if (state.horas === 0 && state.minutos === 0 && state.segundos === 0) {
+          if (state.horas === 0 && state.minutos === 0 && state.segundos === 0) {          
+            alert("Tempo esgotado!");
             this.zerar()
           } else {
 
@@ -54,7 +55,7 @@ class App extends React.Component {
             } else if (state.milissegundo <= 0) {
               this.state.milissegundo = 100
               this.decrementarSegundo(state)
-            }
+            }           
           }
           return ({ milissegundo: state.milissegundo - 1 })
         })
@@ -134,8 +135,7 @@ class App extends React.Component {
           <h1 class="my-title" > {this.state.horas}:{this.state.minutos}:{this.state.segundos}</h1>
                        
         <Button className="mr-3 col-3" variant="primary"onClick={() => this.zerar()}>Zerar</Button>
-        <Button className="mr-3 col-3" variant="primary" onClick={() => this.pararTempo()}>{this.state.nameStop}</Button>
-        <Button className="mr-3 col-3" variant="primary"onClick={() => this.parcial()}>Parcial</Button>                
+        <Button className="mr-3 col-3" variant="primary" onClick={() => this.pararTempo()}>{this.state.nameStop}</Button>                     
          </div>   
         </div>    
       );
