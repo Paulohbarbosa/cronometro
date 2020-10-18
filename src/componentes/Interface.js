@@ -4,7 +4,6 @@ import Temporizador from '../temporizador/Temporizador';
 import Relogio from '../relogio/Relogio';
 import Cronometro from '../cronometro/Cronometro';
 import { Alarm, Clock, Stopwatch } from 'react-bootstrap-icons';
-import Saudacao from './Saudaçao';
 
 const Interface = (props) => (
 
