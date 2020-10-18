@@ -92,11 +92,15 @@ class Cronometro extends React.Component {
       () => this.decrementar(), 10)
   }
 
-  setTempo() {
+   setTempo() {
+    let horas = this.refs.horas.value || 0;
+    let minutos = this.refs.minutos.value || 0;
+    let segundos = this.refs.segundos.value || 0;
+    console.log(horas, minutos, segundos);
     this.setState({
-      horas: this.refs.horas.value,
-      minutos: this.refs.minutos.value,
-      segundos: this.refs.segundos.value,
+      horas,
+      minutos,
+      segundos
     })
   }
 
