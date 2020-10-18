@@ -1,107 +1,138 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Contador from './Contador'
+//import Contador from './Contador'
 import Botao from './Botao'
 import LabelRelogio from './LabelRelogio'
+//import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-
-class App extends React.Component {
-  constructor(props){
+class Cronometro extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      milissegundos:0,
+      horas: 0,
       segundos: 0,
       minutos: 0,
+      centesimo: 100,
       stop: false,
-      nameStop: "Start",
-      name: "Cronômetro", 
+      nameStop: "Iniciar",
+      name: "Temporizador",
       parcial: ""
     };
-  }
-  zerarCronometro() {
-     this.state.milissegundos = -1
-      this.state.segundos = 0
-      this.state.minutos = 0
-      this.state.parcial = ""
-   }
-  
-  parcial(){
-    let p = this.state.minutos+ ":"+ this.state.segundos+ ":"+ this.state.milissegundos + "\n\n"
-    this.state.parcial = this.state.parcial + p
-  }
-  
-  pararTempo(){
-    this.setState({ 
-        stop: !this.state.stop 
-      })
-    if (this.state.stop)
-      this.state.nameStop = "Start"
-    else
-      this.state.nameStop = "Stop"
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  incrementar () {
-    if (this.state.stop === true){
+  parcial() {
+    let p = this.state.horas + ":" + this.state.minutos + ":" + this.state.segundos + ':' + this.state.centesimo + "\n\n"
+    this.state.parcial = this.state.parcial + p
+  }
+
+  pararTempo() {
+    this.setState({
+      stop: !this.state.stop
+    })
+    if (this.state.stop)
+      this.state.nameStop = "Parar"
+    else
+      this.state.nameStop = "Iniciar"
+  }
+
+  decrementar() {
+    if (this.state.stop === true) {
       this.setState(
-         function (state, props) {
-          if (state.milissegundos >= 99) {
-            this.incrementarSegundo(state)
-            this.zera();            
-          }
-          if (state.segundos >= 60) {
+        function (state, props) {
+
+          if (state.horas === 0 && state.minutos === 0 && state.segundos === 0) {
             this.zerar()
-            this.incrementarMinuto(state)                 
-            }  
-          return({ milissegundos: state.milissegundos +1, /*segundos: state.segundos*/})
-         })
+          } else {
+
+            if (state.minutos === 0 && state.segundos === 0) {
+              this.state.minutos = 59
+              this.state.segundos = 59
+              this.decrementarHoras(state)
+            } else if (state.segundos <= 0) {
+              this.decrementarMinuto(state)
+              this.state.segundos = 59
+            } else if (state.centesimo <= 0) {
+              this.state.centesimo = 100
+              this.decrementarSegundo(state)
+            }
+          }
+          return ({ centesimo: state.centesimo - 1 })
+        })
     }
   }
 
- incrementarSegundo (state) {
-    this.setState(() => { 
-      return {segundos: state.segundos +1}
-    })
-  };
-  zera () {
-    this.setState({ 
-      milissegundos: 0 
+
+  decrementarSegundo(state) {
+    this.setState(() => {
+      return { segundos: state.segundos - 1 }
     })
   }
 
-  
-  incrementarMinuto (state) {
-    this.setState(() => { 
-      return {minutos: state.minutos +1}
-    })
-  };
-  
-  zerar () {
-    this.setState({ 
-      segundos: 0 
+  decrementarMinuto(state) {
+    this.setState(() => {
+      return { minutos: state.minutos - 1 }
     })
   }
 
-  componentDidMount(){
+  decrementarHoras(state) {
+    this.setState(() => {
+      return { horas: state.horas - 1 }
+    })
+  };
+
+  zerar() {
+    this.setState({
+      segundos: 0,
+      minutos: 0,
+      centesimo: 0,
+      horas: 0
+    })
+  }
+
+  componentDidMount() {
     this.timer = setInterval(
-      () => this.incrementar(), 10)
+      () => this.decrementar(), 10)
   }
-  
 
-  render(){
+  setTempo() {
+    this.setState({
+      horas: this.refs.horas.value,
+      minutos: this.refs.minutos.value,
+      segundos: this.refs.segundos.value,
+    })
+  }
 
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  render() {
     return (
       <div>
-        
-        <LabelRelogio name={this.state.name} />
-        <Contador minutos={this.state.minutos} segundos={this.state.segundos} milissegundos={this.state.milissegundos} />        
-        <Botao onClick={() => this.zerarCronometro()} label={"Zerar"} />
-        <Botao onClick={() => this.pararTempo()} label={this.state.nameStop} />
-        <Botao onClick={() => this.parcial()} label={"Pacial"} />
-        <LabelRelogio name={this.state.parcial} />
+        <div className="relogio">
+          <form ref="form" onSubmit={this.handleSubmit} className="countdown-form">
+            <input type="number" min="0" max="8.760" ref="horas" />
+            <input type="number" min="0" max="59" ref="minutos" />
+            <input type="number" min="0" max="59" ref="segundos" />
+            <Botao onClick={() => this.setTempo()} label="Iniciar" />
+          </form>
+          <h1 class="my-title" > {this.state.horas}:{this.state.minutos}:{this.state.segundos}</h1>
+          <LabelRelogio name={this.state.name} />
+          <Botao onClick={() => this.zerar()} label={"Zerar"} />
+          <Botao onClick={() => this.pararTempo()} label={this.state.nameStop} />
+          <Botao onClick={() => this.parcial()} label={"Pacial"} />
+          <LabelRelogio name={this.state.parcial} />
+        </div>
       </div>
     );
   }
+
+
 }
 
-export default App;
+export default Cronometro;
+
+
+
+
