@@ -6,10 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
-
-.my-title{
-  color: blue;
-  font-size: 1cm;
+.Center{
+  text-align: center;
+  justify-content: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
