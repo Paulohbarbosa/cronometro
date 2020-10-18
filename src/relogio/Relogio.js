@@ -1,5 +1,4 @@
 import React from 'react';
-import LabelRelogio from '../componentes/LabelRelogio';
 import { Row, Col } from 'react-bootstrap';
 
 class Relogio extends React.Component {
