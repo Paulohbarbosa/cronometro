@@ -4,7 +4,6 @@ import Temporizador from '../temporizador/Temporizador';
 import Relogio from '../relogio/Relogio';
 import Cronometro from '../cronometro/Cronometro';
 import { Alarm, Clock, Stopwatch } from 'react-bootstrap-icons';
-import Saudacao from './Saudaçao';
 
 const Interface = (props) => (
 
@@ -20,9 +19,6 @@ const Interface = (props) => (
                     </Tab>
                     <Tab eventKey="Cronometro" title={<Stopwatch color="royalblue" size={50} />}>
                         <Cronometro />
-                    </Tab>
-                    <Tab eventKey="test" title="Test">
-                        <Saudacao tipo="bom dia" nome="João" />
                     </Tab>
                 </Tabs>
             </Col>
