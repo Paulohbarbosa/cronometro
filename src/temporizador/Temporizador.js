@@ -43,7 +43,7 @@ class App extends React.Component {
          if (state.horas === 0 && state.minutos === 0 && state.segundos === 0 && state.stop === true ) {
            this.zerar();
            this.state.nameStop = "Iniciar";
-           alert('Essa porra não fecha');
+           alert('Tempo esgotado!');
            this.state.stop = false;
           } else if( state.stop === true) {
 
