@@ -40,7 +40,7 @@ class App extends React.Component {
       this.setState(
         function (state, props) {
 
-         if (state.horas === 0 && state.minutos === 0 && state.segundos === 0 && state.stop === true ) {
+         if (state.horas <= 0 && state.minutos == 0 && state.segundos <= 0 && state.stop === true ) {
            this.zerar();
            this.state.nameStop = "Iniciar";
            alert('Tempo esgotado!');
