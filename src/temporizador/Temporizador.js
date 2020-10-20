@@ -11,20 +11,14 @@ class App extends React.Component {
       segundos: 0,
       minutos: 0,
       milissegundo: 100,
-      stop: false,
+      stop: false,      
       nameStop: "Iniciar",
-      name: "Temporizador",
-      parcial: ""
+      name: "Temporizador"      
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  parcial() {
-    let p = this.state.horas + ":" + this.state.minutos + ":" + this.state.segundos + ':' + this.state.milissegundo + "\n\n"
-    this.state.parcial = this.state.parcial + p
-  }
-
+  
   pararTempo() {
     this.setState({
       stop: !this.state.stop
@@ -40,11 +34,12 @@ class App extends React.Component {
       this.setState(
         function (state, props) {
 
-          if (state.horas === 0 && state.minutos === 0 && state.segundos === 0) {          
-            alert("Tempo esgotado!");
-            this.zerar()
-          } else {
-
+          if (state.horas <= 0 && state.minutos <= 0 && state.segundos <= 0) {
+            this.zerar();
+            this.state.nameStop = "Iniciar";
+            alert('Tempo esgotado!');
+            this.state.stop = false;
+          } else if(state.stop===true) {              
             if (state.minutos === 0 && state.segundos === 0) {
               this.state.minutos = 59
               this.state.segundos = 59
@@ -55,13 +50,15 @@ class App extends React.Component {
             } else if (state.milissegundo <= 0) {
               this.state.milissegundo = 100
               this.decrementarSegundo(state)
-            }           
+            }
           }
-          return ({ milissegundo: state.milissegundo - 1 })
+        
+          return ({
+            milissegundo: state.milissegundo - 1})
         })
     }
   }
-
+ 
   decrementarSegundo(state) {
     this.setState(() => {
       return { segundos: state.segundos - 1 }
@@ -121,9 +118,9 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-       
-      <div>
+    return (      
+        
+      <div>        
         <LabelRelogio name={this.state.name} />
          <div className="relogio">
           <form ref="form" onSubmit={this.handleSubmit} className="countdown-form">
@@ -132,8 +129,7 @@ class App extends React.Component {
             <input type="number" min="0" max="59" ref="segundos" />
             <Button className="mr-3 ml-1 col-3" variant="primary" onClick={() => this.setTempo()}> Adicionar</Button>
           </form>
-          <h1 class="my-title" > {this.state.horas}:{this.state.minutos}:{this.state.segundos}</h1>
-                       
+         <h1 class="my-title" > {this.state.horas}:{this.state.minutos}:{this.state.segundos}</h1>          
         <Button className="mr-3 col-3" variant="primary"onClick={() => this.zerar()}>Zerar</Button>
         <Button className="mr-3 col-3" variant="primary" onClick={() => this.pararTempo()}>{this.state.nameStop}</Button>                     
          </div>   
